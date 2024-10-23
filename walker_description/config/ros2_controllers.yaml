@@ -2,14 +2,11 @@
 controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
-#     jetleg_controller:
-#       type: jetleg_controller/JetlegController
+    # jetleg_controller:
+    #   type: jetleg_controller/JetlegController
 
-#     joint_state_broadcaster:
-#       type: joint_state_broadcaster/JointStateBroadcaster
-
-#     imu_sensor_broadcaster:
-#       type: imu_sensor_broadcaster/IMUSensorBroadcaster
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 
 # jetleg_controller:
 #   ros__parameters:
@@ -21,8 +18,3 @@ controller_manager:
 #       - position
 #     state_interfaces:
 #       - position
-
-# imu_sensor_broadcaster:
-#   ros__parameters:
-#     sensor_name: imu0
-#     frame_id: shank_imu

@@ -22,6 +22,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.substitutions import PathJoinSubstitution
 
+from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
@@ -29,39 +30,46 @@ def generate_launch_description() -> LaunchDescription:
 
     ld = LaunchDescription()
 
-    robot_description_path_arg = DeclareLaunchArgument(
-        "model",
-        default_value=PathJoinSubstitution([
-            FindPackageShare("walker_description"),
-            'urdf', 'simple_walker.urdf.xacro'
-        ])
+    # Toggle Gazebo GUI client
+    rviz_arg = DeclareLaunchArgument(
+        "rviz",
+        default_value="false"
     )
-    ld.add_action(robot_description_path_arg)
-    rsp_launch_path = PathJoinSubstitution([
-        FindPackageShare("walker_description"),
-        "launch/rsp.launch.py"
-    ])
-    rsp = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(rsp_launch_path)
-    )
-    ld.add_action(rsp)
+    ld.add_action(rviz_arg)
 
-    robot_system_path = PathJoinSubstitution([
-        FindPackageShare("walker_description"),
-        'launch', 'fake_system.launch.py'
+    # Add Gazebo to launch step
+    gazebo_launch_path = PathJoinSubstitution([
+        FindPackageShare("gazebo_ros"),
+        "launch/gazebo.launch.py"
     ])
-    robot_system = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(robot_system_path)
-    )
-    ld.add_action(robot_system)
 
-    spawn_controllers_path = PathJoinSubstitution([
-        FindPackageShare("walker_description"),
-        'launch', 'spawn_controllers.launch.py'
-    ])
-    spawn_controllers = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(spawn_controllers_path)
+    # Load walker into the world
+    model_name_arg = DeclareLaunchArgument(
+        "model_name",
+        default_value="simple_walker"
     )
-    ld.add_action(spawn_controllers)
+
+    # Start the controller manager
+    ros2_control_params_file = PathJoinSubstitution([
+        FindPackageShare("walker_description"),
+        "config", "ros2_controllers.yaml"
+    ])
+    controller_manager = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[ros2_control_params_file],
+        remappings=[('/controller_manager/robot_description', '/robot_description')]
+    )
+    ld.add_action(controller_manager)
+
+    # Add RVIZ to launch step
+    rviz_launch_path = PathJoinSubstitution([
+        FindPackageShare("walker_description"),
+        "launch", "rviz.launch.py"
+    ])
+    rviz = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(rviz_launch_path)
+    )
+    ld.add_action(rviz)
 
     return ld
