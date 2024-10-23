@@ -44,6 +44,7 @@
     <joint name="body_to_leg_left" type="revolute">
         <parent link="body" />
         <child link="thigh_left" />
+        <axis xyz="0 1 0" />
         <origin xyz="0 ${-bodyheight} ${-(bodydepth / 2 + shank_length)}" />
         <limit effort="100" lower="-0.5" upper="0.5" velocity="10"/>
     </joint>
@@ -53,6 +54,7 @@
     <joint name="body_to_leg_right" type="revolute">
         <parent link="body" />
         <child link="thigh_right" />
+        <axis xyz="0 1 0" />
         <origin xyz="0 ${bodyheight} ${-(bodydepth / 2 + shank_length)}" />
         <limit effort="100" lower="-0.5" upper="0.5" velocity="10"/>
     </joint>
