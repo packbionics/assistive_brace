@@ -29,6 +29,16 @@ def generate_launch_description() -> LaunchDescription:
 
     ld = LaunchDescription()
 
+    rviz_toggle_arg = DeclareLaunchArgument(
+        'rvizconfig',
+        default_value=PathJoinSubstitution([
+            FindPackageShare("walker_description"),
+            "config", "visualize_walker.rviz"
+        ]),
+        description='Config file used to load RVIZ configs on startup'
+    )
+    ld.add_action(rviz_toggle_arg)
+
     robot_description_path_arg = DeclareLaunchArgument(
         "model",
         default_value=PathJoinSubstitution([
