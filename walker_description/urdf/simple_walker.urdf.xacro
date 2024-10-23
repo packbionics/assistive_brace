@@ -10,6 +10,9 @@
     <xacro:property name="bodyheight" value="0.3" />
     <xacro:property name="bodydepth" value="0.3" />
 
+    <link name="base_link">
+    </link>
+
     <!-- Define the upper portion of the robot -->
     <link name="body">
         <visual>
@@ -39,6 +42,12 @@
     <!-- Include components -->
     <xacro:include filename="$(find walker_description)/urdf/walker_leg.macro.xacro" />
 
+    <!-- Attach dummy root link to body -->
+    <joint name="base_link_to_body" type="fixed">
+        <parent link="base_link" />
+        <child link="body" />
+    </joint>
+
     <!-- Instantiate the left leg of the robot -->
     <xacro:walker_leg_macro id="left" />
     <joint name="body_to_leg_left" type="revolute">
@@ -61,7 +70,7 @@
 
     <!-- Include hardware configuration for ros2_control -->
     <xacro:include filename="$(find walker_description)/urdf/ros2_control/simple_walker.ros2_control.xacro" />
-    <xacro:walker_ros2_control name="walker" plugin="fake_components/GenericSystem" />
+    <xacro:walker_ros2_control name="walker" plugin="gazebo_ros2_control/GazeboSystem" />
 
     <!-- Specify the Gazebo plugin for interfacing with ros2_control -->
     <gazebo>
