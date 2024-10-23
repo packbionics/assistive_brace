@@ -2,19 +2,34 @@
 controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
-    # jetleg_controller:
-    #   type: jetleg_controller/JetlegController
-
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-# jetleg_controller:
-#   ros__parameters:
-#     joints:
-#       - knee_joint_
-#     imus:
-#       - imu0
-#     command_interfaces:
-#       - position
-#     state_interfaces:
-#       - position
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+# Generic implementation of joint trajectory controller, customize as needed, all values are placeholders
+joint_trajectory_controller:
+  ros__parameters:
+    joints: 
+      - body_to_leg_left
+      - knee_joint_left
+      - ankle_joint_left
+      - body_to_leg_right
+      - knee_joint_right
+      - ankle_joint_right
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    
+    # action_monitor_rate: 20.0
+
+    # allow_partial_joints_goal: false
+    # open_loop_control: true
+    # constraints:
+    #   stopped_velocity_tolerance: 0.01
+    #   goal_time: 0.0
+    #   joint1:
+    #     trajectory: 0.05
+    #     goal: 0.03    

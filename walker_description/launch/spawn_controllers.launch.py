@@ -26,6 +26,7 @@ def generate_launch_description():
 
     controller_list = [
         'joint_state_broadcaster',
+        'joint_trajectory_controller'
     ]
     for controller in controller_list:
         ld.add_action(Node(
@@ -33,5 +34,11 @@ def generate_launch_description():
             executable='spawner',
             arguments=[controller]
         ))
+
+    rqt_joint_trajectory_controller = Node(
+        package="rqt_joint_trajectory_controller",
+        executable="rqt_joint_trajectory_controller"
+    )
+    ld.add_action(rqt_joint_trajectory_controller)
 
     return ld
