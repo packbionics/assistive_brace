@@ -28,14 +28,14 @@
             </geometry>
         </collision>
         <inertial>
-            <mass value="${massbody}" />
+            <mass value="1" />
             <inertia 
-                ixx="${1/12 * massbody * (bodyheight*bodyheight + bodydepth*bodydepth)}" 
-                iyy="${1/12 * massbody * (bodywidth*bodywidth + bodydepth*bodydepth)}" 
-                izz="${1/12 * massbody * (bodyheight*bodyheight + bodywidth*bodywidth)}" 
+                ixx="1e-1" 
                 ixy="0" 
                 ixz="0" 
-                iyz="0" />
+                iyy="1e-1" 
+                iyz="0"
+                izz="1e-1" />
         </inertial>
     </link>
 
