@@ -13,6 +13,8 @@
     <xacro:property name="shank_mass" value="1" />
     <xacro:property name="foot_mass" value="1.5" />
 
+    <xacro:include filename="$(find walker_description)/urdf/colors.xacro"/>
+
     <xacro:macro name="walker_leg_macro" params="id">
         <link name="thigh_${id}">
             <visual>

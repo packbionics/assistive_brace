@@ -59,7 +59,7 @@
 
     <!-- Include hardware configuration for ros2_control -->
     <xacro:include filename="$(find walker_description)/urdf/ros2_control/simple_walker.ros2_control.xacro" />
-    <xacro:walker_ros2_control name="walker" plugin="gazebo_ros2_control/GazeboSystem" />
+    <xacro:walker_ros2_control name="walker" plugin="fake_components/GenericSystem" />
 
     <!-- Specify the Gazebo plugin for interfacing with ros2_control -->
     <gazebo>
