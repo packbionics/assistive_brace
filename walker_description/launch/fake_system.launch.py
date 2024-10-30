@@ -72,4 +72,22 @@ def generate_launch_description() -> LaunchDescription:
     )
     ld.add_action(rviz)
 
+    static_transform_publisher = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="map_to_robot_broadcaster",
+        arguments=[
+            '--x', '0', 
+            '--y', '0', 
+            '--z', '0', 
+            '--qx', '0', 
+            '--qy', '0', 
+            '--qz', '0', 
+            '--qw', '1', 
+            '--frame-id', 'map', 
+            '--child-frame-id', 'body'
+        ]
+    )
+    ld.add_action(static_transform_publisher)
+
     return ld

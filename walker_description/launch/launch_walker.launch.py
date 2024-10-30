@@ -58,7 +58,7 @@ def generate_launch_description() -> LaunchDescription:
 
     robot_system_path = PathJoinSubstitution([
         FindPackageShare("walker_description"),
-        'launch', 'fake_system.launch.py'
+        'launch', 'gazebo_system.launch.py'
     ])
     robot_system = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(robot_system_path)
