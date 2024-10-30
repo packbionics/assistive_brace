@@ -28,3 +28,5 @@
    ```bash
    ros2 launch walker_description launch_walker.launch.py gui:=true
    ```
+## Troubleshooting
+If you encounter issues running the simulation, try looking in the [Troubleshooting Wiki](https://github.com/packbionics/assistive_brace/wiki/Troubleshooting)
